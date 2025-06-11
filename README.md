@@ -9,7 +9,7 @@ We have written our own IRC protocol that runs on this project.
 It is one of the early projects developed by 3 out of the 4 of the founding committee of telsoc
 
 This is a project created by
-Aria barnes-collett
+Aria 
 Aidan Hammond
 Cam A.
 
