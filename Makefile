@@ -1,14 +1,22 @@
 CC=gcc
-CFLAGS=-g -O0
-OBJS=main.o
+CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
+OBJS=objs/main.o
 
 
 trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-main.o: main.c
+objs/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 
+
+install::
+	cp -v -p trc /usr/bin
+
+uninstall::
+	rm /usr/bin/trc
+
+
 clean::
-	rm $(OBJS)
+	rm $(OBJS) trc
