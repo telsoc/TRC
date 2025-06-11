@@ -11,4 +11,4 @@ objs/%.o: src/%.c
 
 
 clean::
-	rm $(OBJS)
+	rm $(OBJS) trc
