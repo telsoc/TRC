@@ -10,5 +10,13 @@ objs/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 
+
+install::
+	cp -v -p trc /usr/bin
+
+uninstall::
+	rm /usr/bin/trc
+
+
 clean::
 	rm $(OBJS) trc
