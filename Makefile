@@ -1,12 +1,12 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=main.o
+OBJS=objs/main.o
 
 
 trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-main.o: main.c
+objs/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 
