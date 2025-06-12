@@ -9,7 +9,7 @@ char *process_command(char *cmd) {
   for(int i=0; i < NOC; i++) {
     if(strcmp(cmd, cmd_list[i])) {
       func_list[i]();
-      return(0);
+      return(0x0);
     }
   }
 
@@ -17,7 +17,7 @@ char *process_command(char *cmd) {
    * of just sitting in stderr, but for now this works.
    */
   fprintf("ERROR: command not found!");
-  return(-1);
+  return("ERROR: command not found!");
 }
 
 
