@@ -2,7 +2,7 @@
 #define H_SERVER
 
 
-#define PORT_NUM 6667
+#define PORT_NUM "6667"
 
 void start_server();
 

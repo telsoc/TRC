@@ -2,6 +2,7 @@
 // Provides implementations for server.h. These are all socket server related functions.
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -14,7 +15,7 @@
 void start_server() {
     int status;
     struct addrinfo hints;
-    struct arrdinfo *servinfo;
+    struct addrinfo *servinfo;
 
     // Clearing and setting up hints
     memset(&hints, 0, sizeof(hints));
@@ -65,7 +66,7 @@ void start_server() {
     struct sockaddr_storage client;
 
     socklen_t client_size = sizeof(client);
-    int client_fd = accept(sockfd, (struct sockaddr *)&client, &client_size);
+    int client_fd = accept(sock_fd, (struct sockaddr *)&client, &client_size);
 
     if (client_fd < 0) {
         fprintf(stderr, "ERROR: Failed to accept client");

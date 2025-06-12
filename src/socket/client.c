@@ -1,13 +1,22 @@
 // client.c
 // A file for testing purposes. Provides a simple socket client.
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+
 #include "client.h"
 #include "server.h"
 
 void start_client() {
     int status;
     struct addrinfo hints;
-    struct arrdinfo *clientinfo;
+    struct addrinfo *clientinfo;
 
     // Clearing and setting up hints
     memset(&hints, 0, sizeof(hints));
