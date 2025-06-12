@@ -5,6 +5,8 @@
 
 int main() {
     int function;
+
+    printf("Functions:\n\t1) Server\n\t2) Client\n>");
     scanf("%d", &function);
 
     if (function == 1)

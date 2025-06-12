@@ -30,10 +30,12 @@ void start_server() {
     // Read into servinfo
     status = getaddrinfo(NULL, PORT_NUM, &hints, &servinfo);
 
-    if (status != 0) {                  // TODO: turn error checking into a func
-        fprintf(stderr, "ERROR: failed to retrieve server info (%s)", gai_strerror(status));
+    if (status < 0) {                  // TODO: turn error checking into a func
+        perror("ERROR: failed to retrieve server info");
         exit(1);
     }
+
+    printf("LOG: retrieved addrinfo\n");
 
     // TODO: walk the list of values of the linked list - connection
     // assumes the first one is the correct one to use
@@ -41,26 +43,32 @@ void start_server() {
     // Set up the socket
     int sock_fd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol);
     
-    if (sock_fd != 0) {
-        fprintf(stderr, "ERROR: Failed to create socket");
+    if (sock_fd < 0) {
+        perror("ERROR: Failed to create socket");
         exit(1);
     }
+
+    printf("LOG: created socket\n");
 
     // Bind the socket
     int err = bind(sock_fd, servinfo->ai_addr, servinfo->ai_addrlen);
 
-    if (err != 0) {
-        fprintf(stderr, "ERROR: Failed to bind socket");
+    if (err < 0) {
+        perror("ERROR: Failed to bind socket");
         exit(1);
     }
+
+    printf("LOG: binded socket\n");
 
     // Listen
     err = listen(sock_fd, 5);           // TODO: make configurable
 
-    if (err != 0) {
-        fprintf(stderr, "ERROR: Failed to listen");
+    if (err < 0) {
+        perror("ERROR: Failed to listen");
         exit(1);
     }
+
+    printf("LOG: socket listening\n");
 
     // Accept
     struct sockaddr_storage client;
@@ -69,11 +77,11 @@ void start_server() {
     int client_fd = accept(sock_fd, (struct sockaddr *)&client, &client_size);
 
     if (client_fd < 0) {
-        fprintf(stderr, "ERROR: Failed to accept client");
+        perror("ERROR: Failed to accept client");
         exit(1);
     }
 
-    printf("client connected");
+    printf("LOG: client accepted\n");
 
     // From here client_fd will send() and recv() messages to and from that
     // client.
