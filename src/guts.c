@@ -9,10 +9,15 @@ char *process_command(char *cmd) {
   for(int i=0; i < NOC; i++) {
     if(strcmp(cmd, cmd_list[i])) {
       func_list[i]();
+      return(0);
     }
   }
-  
-  return(0);
+
+  /* This will probably be sent to a client, instead
+   * of just sitting in stderr, but for now this works.
+   */
+  fprintf("ERROR: command not found!");
+  return(-1);
 }
 
 
