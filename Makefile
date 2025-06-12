@@ -17,11 +17,11 @@ objs/client.o: src/socket/client.c
 
 
 install::
-	cp -v -p trc /usr/bin
+	cp -v -p objs/trc /usr/bin
 
 uninstall::
 	rm /usr/bin/trc
 
 
 clean::
-	rm $(OBJS) trc
+	rm $(OBJS) objs/trc
