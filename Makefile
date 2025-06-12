@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=objs/main.o objs/socket.o objs/client.o
+OBJS=objs/main.o objs/server.o objs/client.o
 
 
 trc: $(OBJS)
@@ -9,7 +9,7 @@ trc: $(OBJS)
 objs/main.o: src/main.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
-objs/socket.o: src/socket/socket.c
+objs/server.o: src/socket/server.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 objs/client.o: src/socket/client.c
