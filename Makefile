@@ -1,13 +1,19 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=objs/main.o
+OBJS=objs/main.o objs/socket.o objs/client.o
+
 
 trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-objs/%.o: src/%.c
+objs/main.o: src/main.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
+objs/socket.o: src/socket/socket.c
+	$(CC) $(CFLAGS) -c -o $@ $^
+
+objs/client.o: src/socket/client.c
+	$(CC) $(CFLAGS) -c -o $@ $^
 
 
 install::
