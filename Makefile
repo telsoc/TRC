@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=objs/main.o
+OBJS=objs/main.o objs/guts.o
 
 
 trc: $(OBJS)
