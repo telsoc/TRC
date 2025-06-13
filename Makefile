@@ -6,18 +6,12 @@ OBJS=objs/main.o
 objs/trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-<<<<<<< Updated upstream
-objs/%.o: src/%.c
-	$(CC) $(CFLAGS) -c -o $@ $^
-
-=======
 
 objs/%.o: src/socket/%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 objs/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $^
->>>>>>> Stashed changes
 
 
 install::
