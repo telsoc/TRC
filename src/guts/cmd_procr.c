@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "guts.h"
+#include "cmd_procr.h"
 
 
 char *process_command(char *cmd) {
@@ -16,7 +16,7 @@ char *process_command(char *cmd) {
   /* This will probably be sent to a client, instead
    * of just sitting in stderr, but for now this works.
    */
-  fprintf("ERROR: command not found!");
+  fprintf(stderr, "ERROR: command not found!");
   return("ERROR: command not found!");
 }
 
