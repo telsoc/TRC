@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=build/objs/main.o build/objs/client.o build/objs/server.o
+OBJS=build/objs/main.o
 VPATH=src src/server
 
 
@@ -15,11 +15,11 @@ build/objs/%.o: %.c
 
 
 install::
-	cp -v -p objs/trc /usr/bin
+	cp -v -p build/trc /usr/bin
 
 uninstall::
 	rm /usr/bin/trc
 
 
 clean::
-	rm $(OBJS) objs/trc
+	rm $(OBJS) build/trc
