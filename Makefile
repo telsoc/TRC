@@ -1,17 +1,14 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
-OBJS=objs/main.o
+OBJS=objs/main.o objs/client.o objs/server.o
+VPATH=src src/dummy
 
 
 objs/trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-
-objs/%.o: src/socket/%.c
-	$(CC) $(CFLAGS) -c -o $@ $^
-
-objs/%.o: src/%.c
-	$(CC) $(CFLAGS) -c -o $@ $^
+objs/%.o: %.c %.h
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 
 install::
@@ -22,4 +19,4 @@ uninstall::
 
 
 clean::
-	rm $(OBJS) trc
+	rm $(OBJS) objs/trc
