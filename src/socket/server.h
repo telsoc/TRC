@@ -14,6 +14,9 @@
  *
  * This can be used to automatically support IPv4 and IPv6 address if you use
  * the `socket_x_from_info` functions to create your sockets.
+ *
+ * Make sure to call freeaddrinfo() from <sys/socket.h> to avoid leaking memory.
+ *
  * @param[in] port_str Target port address
  */
 struct addrinfo* get_address_info(char* port_str);

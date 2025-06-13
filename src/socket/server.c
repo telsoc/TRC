@@ -121,6 +121,8 @@ char* server_recv(int client_fd) {
 
     if (read_bytes == CLIENT_DISCONNECT)
         return "\0";
+        
+    buf[read_bytes] = '\0';
     return buf;
 }
 

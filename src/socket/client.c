@@ -25,7 +25,7 @@ void start_client(char* port_str) {
     hints.ai_socktype = SOCK_STREAM;    // TCP
 
     // Read into servinfo
-    status = getaddrinfo("localhost", port_str, &hints, &clientinfo);
+    status = getaddrinfo("127.0.0.1", port_str, &hints, &clientinfo);
 
     if (status < 0) {                  // TODO: turn error checking into a func
         perror("ERROR: failed to retrieve server info");
@@ -59,13 +59,14 @@ void start_client(char* port_str) {
     freeaddrinfo(clientinfo);
 
     // Running ping pong
-    char* msg = "Ping";
+    char* msg = "Ping\0";
     int len = strlen(msg);
 
     send(sock_fd, msg, len, 0);
     printf("\nSENT\n");
 
-    char buf[len];
+    char buf[len+1];
+    memset(buf, 0, len + 1);
     recv(sock_fd, buf, len, 0);
     printf("\nRECV: %s\n", buf);
 
