@@ -12,4 +12,4 @@ This is a project created by Aria, Aidan Hammond, Camilla A, and Shaiya J.
 ## Contact and contributions
 If you have any issues, feel free to ping admin on the [Telsoc Discord server](#). 
 
-This project is also open to receiving [Github Issues](https://github.com/telsoc/TRC/issues).
+This project is also open to receiving [Github Issues](https://github.com/telsoc/TRC/issues), and the style guide is [here](styleguide.md).
