@@ -12,10 +12,9 @@
 
 #include "server.h"
 
-void start_server() {
-    int status;
+struct addrinfo* get_address_info(char* port_str) {
     struct addrinfo hints;
-    struct addrinfo *servinfo;
+    struct addrinfo* servinfo;
 
     // Clearing and setting up hints
     memset(&hints, 0, sizeof(hints));
@@ -28,9 +27,9 @@ void start_server() {
                                         // in getaddrinfo()
 
     // Read into servinfo
-    status = getaddrinfo(NULL, PORT_NUM, &hints, &servinfo);
+    int err = getaddrinfo(NULL, port_str, &hints, &servinfo);
 
-    if (status < 0) {                  // TODO: turn error checking into a func
+    if (err < 0) {                      // TODO: turn error checking into a func
         perror("ERROR: failed to retrieve server info");
         exit(1);
     }
@@ -39,9 +38,14 @@ void start_server() {
 
     // TODO: walk the list of values of the linked list - connection
     // assumes the first one is the correct one to use
-    
-    // Set up the socket
-    int sock_fd = socket(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol);
+
+    return servinfo;
+}
+
+
+
+int socket_create(int family, int socktype, int protocol) {
+    int sock_fd = socket(family, socktype, protocol);
     
     if (sock_fd < 0) {
         perror("ERROR: Failed to create socket");
@@ -50,8 +54,17 @@ void start_server() {
 
     printf("LOG: created socket\n");
 
-    // Bind the socket
-    int err = bind(sock_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+    return sock_fd;
+}
+
+int socket_create_from_info(struct addrinfo* servinfo) {
+    return socket_create(servinfo->ai_family, servinfo->ai_socktype, servinfo->ai_protocol);
+}
+
+
+
+void socket_bind(int sock_fd, struct sockaddr* addr, socklen_t addrlen) {
+    int err = bind(sock_fd, addr, addrlen);
 
     if (err < 0) {
         perror("ERROR: Failed to bind socket");
@@ -59,9 +72,16 @@ void start_server() {
     }
 
     printf("LOG: binded socket\n");
+}
 
-    // Listen
-    err = listen(sock_fd, 5);           // TODO: make configurable
+void socket_bind_from_info(int sock_fd, struct addrinfo* servinfo) {
+    socket_bind(sock_fd, servinfo->ai_addr, servinfo->ai_addrlen);
+}
+
+
+
+void socket_listen(int sock_fd, int backlog) {
+    int err = listen(sock_fd, backlog);
 
     if (err < 0) {
         perror("ERROR: Failed to listen");
@@ -69,11 +89,14 @@ void start_server() {
     }
 
     printf("LOG: socket listening\n");
+}
 
-    // Accept
+
+
+int socket_accept(int sock_fd) {
     struct sockaddr_storage client;
-
     socklen_t client_size = sizeof(client);
+
     int client_fd = accept(sock_fd, (struct sockaddr *)&client, &client_size);
 
     if (client_fd < 0) {
@@ -83,9 +106,43 @@ void start_server() {
 
     printf("LOG: client accepted\n");
 
+    return client_fd;
+}
+
+
+
+char* server_recv(int client_fd) {
+    char* buf = (char*) malloc(sizeof(char) * MESSAGE_MAX_LEN);
+
+    if (buf == NULL)
+        return NULL;
+
+    ssize_t read_bytes = recv(client_fd, buf, MESSAGE_MAX_LEN, 0);
+
+    if (read_bytes == CLIENT_DISCONNECT)
+        return "\0";
+    return buf;
+}
+
+int server_send(int client_fd, char* msg, int len) {
+    return send(client_fd, msg, len, 0);
+}
+
+
+int start_server(char* port_str) {
+    struct addrinfo* servinfo = get_address_info(port_str);
+    int sock_fd = socket_create_from_info(servinfo);
+    socket_bind_from_info(sock_fd, servinfo);
+    socket_listen(sock_fd, 5);
+    int client = socket_accept(sock_fd);
+
+
+
     // From here client_fd will send() and recv() messages to and from that
     // client.
 
     // Free servinfo
     freeaddrinfo(servinfo);
+
+    return client;
 }

@@ -13,7 +13,7 @@
 #include "client.h"
 #include "server.h"
 
-void start_client() {
+void start_client(char* port_str) {
     int status;
     struct addrinfo hints;
     struct addrinfo *clientinfo;
@@ -25,7 +25,7 @@ void start_client() {
     hints.ai_socktype = SOCK_STREAM;    // TCP
 
     // Read into servinfo
-    status = getaddrinfo("localhost", PORT_NUM, &hints, &clientinfo);
+    status = getaddrinfo("localhost", port_str, &hints, &clientinfo);
 
     if (status < 0) {                  // TODO: turn error checking into a func
         perror("ERROR: failed to retrieve server info");
@@ -34,8 +34,6 @@ void start_client() {
 
     printf("LOG: retrieved addrinfo\n");
 
-    // TODO: walk the list of values of the linked list - connection
-    // assumes the first one is the correct one to use
 
     // Set up the socket
     int sock_fd = socket(clientinfo->ai_family, clientinfo->ai_socktype, clientinfo->ai_protocol);
@@ -59,4 +57,21 @@ void start_client() {
 
     // Freeing info
     freeaddrinfo(clientinfo);
+
+    // Running ping pong
+    char* msg = "Ping";
+    int len = strlen(msg);
+
+    send(sock_fd, msg, len, 0);
+    printf("\nSENT\n");
+
+    char buf[len];
+    recv(sock_fd, buf, len, 0);
+    printf("\nRECV: %s\n", buf);
+
+    send(sock_fd, msg, len, 0);
+    printf("\nSENT\n");
+
+    recv(sock_fd, buf, len, 0);
+    printf("\nRECV: %s\n", buf);
 }
