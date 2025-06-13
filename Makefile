@@ -4,10 +4,13 @@ OBJS=build/objs/main.o build/objs/client.o build/objs/server.o
 VPATH=src src/dummy
 
 
-build/objs/trc: $(OBJS)
+build/trc: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
 build/objs/%.o: %.c %.h
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+build/objs/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 
