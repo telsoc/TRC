@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
 OBJS=build/objs/main.o build/objs/client.o build/objs/server.o
-VPATH=src src/dummy
+VPATH=src src/server
 
 
 build/trc: $(OBJS)
