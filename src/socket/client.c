@@ -59,7 +59,7 @@ void start_client(char* port_str) {
     freeaddrinfo(clientinfo);
 
     // Running ping pong
-    char* msg = "Ping\0";
+    char* msg = "Ping";
     int len = strlen(msg);
 
     send(sock_fd, msg, len, 0);

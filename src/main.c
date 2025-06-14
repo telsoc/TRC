@@ -14,9 +14,9 @@ int main() {
     if (function == 1) {
         int client = start_server(PORT);
         printf("%s\n", server_recv(client));
-        server_send(client, "Pong\0", 5);
+        server_send(client, "Pong", 4);
         printf("%s\n", server_recv(client));
-        server_send(client, "Pong\0", 5);
+        server_send(client, "Pong", 4);
     }
     else
         start_client(PORT);
