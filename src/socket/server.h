@@ -1,4 +1,23 @@
 /// @file server.h
+/**
+ * Starting a server that complies with IPv4 and 6 is as simple as running the
+ * following:
+ *
+ * ```
+ * struct addrinfo* servinfo = get_address_info("12345");
+ * int sock_fd = socket_create_from_info(servinfo);
+ * socket_bind_from_info(sock_fd, servinfo);
+ * socket_listen(sock_fd, 5);
+ * int client = socket_accept(sock_fd);
+ * ```
+ *
+ * Implementations for handling multiple connections are not provided - this 
+ * file only deals with socket and server creation, and send/recv. 
+ *
+ * This means `client` in the above program  will only be a single client
+ * (the client who connects first).
+ */
+
 #ifndef H_SERVER
 #define H_SERVER
 
@@ -55,7 +74,7 @@ int server_send(int client_fd, char* msg, int len);
 
 
 
-/// Wrapper for all server.h functions, starts a server on a given port and accepts a single client (returned in int). Used for testing purporses.
+/// Wrapper for all server.h functions, starts a server on a given port and returns the socket file descriptor (returned in int). From here you can accept clients and use send/recv.
 int start_server(char* port_str);
 
 #endif

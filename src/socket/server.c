@@ -136,15 +136,9 @@ int start_server(char* port_str) {
     int sock_fd = socket_create_from_info(servinfo);
     socket_bind_from_info(sock_fd, servinfo);
     socket_listen(sock_fd, 5);
-    int client = socket_accept(sock_fd);
-
-
-
-    // From here client_fd will send() and recv() messages to and from that
-    // client.
 
     // Free servinfo
     freeaddrinfo(servinfo);
 
-    return client;
+    return sock_fd;
 }
