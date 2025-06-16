@@ -13,9 +13,6 @@
  *
  * Implementations for handling multiple connections are not provided - this 
  * file only deals with socket and server creation, and send/recv. 
- *
- * This means `client` in the above program  will only be a single client
- * (the client who connects first).
  */
 
 #ifndef H_SERVER
