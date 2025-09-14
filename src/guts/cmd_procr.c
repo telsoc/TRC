@@ -4,76 +4,71 @@
 
 #include "cmd_procr.h"
 
-
 char *process_command(char *cmd) {
   for(int i=0; i < NOC; i++) {
     if(strcmp(cmd, cmd_list[i])) {
-      func_list[i]();
-      return(0x0);
+      func_list[i](cmd);
+      return("");
     }
   }
 
-  /* This will probably be sent to a client, instead
-   * of just sitting in stderr, but for now this works.
-   */
   fprintf(stderr, "ERROR: command not found!");
   return("ERROR: command not found!");
 }
 
-
-int r_admin() {return(0);}
-int r_away() {return(0);}
-int r_cnotice() {return(0);}
-int r_cprivmsg() {return(0);}
-int r_connect() {return(0);}
-int r_die() {return(0);}
-int r_encap() {return(0);}
-int r_error() {return(0);}
-int r_help() {return(0);}
-int r_info() {return(0);}
-int r_invite() {return(0);}
-int r_ison() {return(0);}
-int r_join() {return(0);}
-int r_kick() {return(0);}
-int r_kill() {return(0);}
-int r_knock() {return(0);}
-int r_links() {return(0);}
-int r_list() {return(0);}
-int r_lusers() {return(0);}
-int r_mode() {return(0);}
-int r_motd() {return(0);}
-int r_names() {return(0);}
-int r_nick() {return(0);}
-int r_notice() {return(0);}
-int r_oper() {return(0);}
-int r_part() {return(0);}
-int r_pass() {return(0);}
-int r_ping() {return(0);}
-int r_pong() {return(0);}
-int r_privmsg() {return(0);}
-int r_quit() {return(0);}
-int r_quote() {return(0);}
-int r_rehash() {return(0);}
-int r_rules() {return(0);}
-int r_server() {return(0);}
-int r_service() {return(0);}
-int r_servlist() {return(0);}
-int r_squery() {return(0);}
-int r_squit() {return(0);}
-int r_setname() {return(0);}
-int r_silence() {return(0);}
-int r_stats() {return(0);}
-int r_summon() {return(0);}
-int r_time() {return(0);}
-int r_topic() {return(0);}
-int r_trace() {return(0);}
-int r_user() {return(0);}
-int r_userhost() {return(0);}
-int r_userip() {return(0);}
-int r_users() {return(0);}
-int r_version() {return(0);}
-int r_wallops() {return(0);}
-int r_watch() {return(0);}
-int r_who() {return(0);}
-int r_whois() {return(0);}
-int r_whowas() {return(0);}
+char *r_admin(char *input) {return(0);}
+char *r_away(char *input) {return(0);}
+char *r_cnotice(char *input) {return(0);}
+char *r_cprivmsg(char *input) {return(0);}
+char *r_connect(char *input) {return(0);}
+char *r_die(char *input) {return(0);}
+char *r_encap(char *input) {return(0);}
+char *r_error(char *input) {return(0);}
+char *r_help(char *input) {return(0);}
+char *r_info(char *input) {return(0);}
+char *r_invite(char *input) {return(0);}
+char *r_ison(char *input) {return(0);}
+char *r_join(char *input) {return(0);}
+char *r_kick(char *input) {return(0);}
+char *r_kill(char *input) {return(0);}
+char *r_knock(char *input) {return(0);}
+char *r_links(char *input) {return(0);}
+char *r_list(char *input) {return(0);}
+char *r_lusers(char *input) {return(0);}
+char *r_mode(char *input) {return(0);}
+char *r_motd(char *input) {return(0);}
+char *r_names(char *input) {return(0);}
+char *r_nick(char *input) {return(0);}
+char *r_notice(char *input) {return(0);}
+char *r_oper(char *input) {return(0);}
+char *r_part(char *input) {return(0);}
+char *r_pass(char *input) {return(0);}
+char *r_ping(char *input) {return(0);}
+char *r_pong(char *input) {return(0);}
+char *r_privmsg(char *input) {return(0);}
+char *r_quit(char *input) {return(0);}
+char *r_quote(char *input) {return(0);}
+char *r_rehash(char *input) {return(0);}
+char *r_rules(char *input) {return(0);}
+char *r_server(char *input) {return(0);}
+char *r_service(char *input) {return(0);}
+char *r_servlist(char *input) {return(0);}
+char *r_squery(char *input) {return(0);}
+char *r_squit(char *input) {return(0);}
+char *r_setname(char *input) {return(0);}
+char *r_silence(char *input) {return(0);}
+char *r_stats(char *input) {return(0);}
+char *r_summon(char *input) {return(0);}
+char *r_time(char *input) {return(0);}
+char *r_topic(char *input) {return(0);}
+char *r_trace(char *input) {return(0);}
+char *r_user(char *input) {return(0);}
+char *r_userhost(char *input) {return(0);}
+char *r_userip(char *input) {return(0);}
+char *r_users(char *input) {return(0);}
+char *r_version(char *input) {return(0);}
+char *r_wallops(char *input) {return(0);}
+char *r_watch(char *input) {return(0);}
+char *r_who(char *input) {return(0);}
+char *r_whois(char *input) {return(0);}
+char *r_whowas(char *input) {return(0);}
