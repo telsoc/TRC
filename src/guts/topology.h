@@ -10,6 +10,16 @@ struct User {
   char real_name[NAME_LENGTH];
 };
 
+/* number_of_users is fine to be an unsigned
+ * int, because I'm not convinced that
+ * there's more than 4294967296 IRC users that
+ * exist.
+ */
+struct User_Array {
+  struct User *array;
+  unsigned int number_of_users;
+};
+
 struct Channel {
   char name[NAME_LENGTH];
   char desc[DESC_LENGTH];
