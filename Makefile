@@ -9,7 +9,7 @@
 ## comments are saying, ping vibe-876 (Camilla) a message.
 
 CC=gcc
-CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code
+CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code -Wno-unused-parameter
 OBJS=build/objs/main.o build/objs/cmd_procr.o build/objs/topology.o
 VPATH=src src/socket src/utils src/guts
 

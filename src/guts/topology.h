@@ -3,6 +3,7 @@
 #define DESC_LENGTH 64
 #define MESSAGE_LENGTH 128
 #define MAX_CHANNEL_USERS 32
+#define MAX_CHANNELS 128
 
 
 struct User {
@@ -24,6 +25,12 @@ struct Channel {
   char name[NAME_LENGTH];
   char desc[DESC_LENGTH];
   struct User *users[MAX_CHANNEL_USERS];
+  unsigned char number_of_users;
+};
+
+struct Channel_Array {
+  struct Channel *array;
+  unsigned int number_of_channels;
 };
 
 /* This is set to a user pointer to try
@@ -36,3 +43,7 @@ struct Message {
   struct Channel *channel;
   char message[MESSAGE_LENGTH];
 };
+
+
+struct User_Array *add_new_user(struct User new_user, struct User_Array *user_array);
+int add_user_to_channel(struct Channel *channel, struct User *user);
