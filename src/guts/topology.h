@@ -16,7 +16,7 @@ struct User {
  * there's more than 4294967296 IRC users that
  * exist.
  */
-struct User_Array {
+struct UserArray {
   struct User *array;
   unsigned int number_of_users;
 };
@@ -28,7 +28,7 @@ struct Channel {
   unsigned char number_of_users;
 };
 
-struct Channel_Array {
+struct ChannelArray {
   struct Channel *array;
   unsigned int number_of_channels;
 };
@@ -45,5 +45,5 @@ struct Message {
 };
 
 
-struct User_Array *add_new_user(struct User new_user, struct User_Array *user_array);
+struct UserArray *add_new_user(struct User new_user, struct UserArray *user_array);
 int add_user_to_channel(struct Channel *channel, struct User *user);
