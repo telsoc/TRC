@@ -12,7 +12,7 @@
  * ensuring that the user and channels exist
  * before anything is done.
  */
-struct User_Array *add_new_user(struct User new_user, struct User_Array *user_array) {
+struct UserArray *add_new_user(struct User new_user, struct UserArray *user_array) {
   user_array->number_of_users += 1;
   user_array->array = realloc(user_array->array,
 			      user_array->number_of_users * sizeof(struct User));

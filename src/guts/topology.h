@@ -29,7 +29,7 @@ struct Channel {
 };
 
 struct ChannelArray {
-  struct Channel *array;
+  struct Channel **array;
   unsigned int number_of_channels;
 };
 
