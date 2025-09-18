@@ -10,7 +10,7 @@
 
 CC=gcc
 CFLAGS=-g -O0 -Wall -Wextra -Wshadow -Wunreachable-code -Wno-unused-parameter
-OBJS=build/objs/main.o build/objs/cmd_procr.o build/objs/topology.o build/objs/init_guts.o
+OBJS=build/objs/main.o build/objs/cmd_procr.o build/objs/topology.o build/objs/init_guts.o build/objs/cmd_line.o
 VPATH=src src/socket src/utils src/guts
 
 
