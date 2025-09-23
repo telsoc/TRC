@@ -23,6 +23,9 @@ build/objs/%.o: %.c %.h
 build/objs/%.o: %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+build/objs/%.o: %.h
+	$(CC) $(CFLAGS) -c $@ $<
+
 
 install::
 	cp -v -p build/trc /usr/bin
