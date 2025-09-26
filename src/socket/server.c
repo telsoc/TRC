@@ -10,6 +10,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#include "../utils/logging.h"
 #include "server.h"
 
 struct addrinfo* get_address_info(char* port_str) {
@@ -30,11 +31,11 @@ struct addrinfo* get_address_info(char* port_str) {
     int err = getaddrinfo(NULL, port_str, &hints, &servinfo);
 
     if (err < 0) {                      // TODO: turn error checking into a func
-        perror("ERROR: failed to retrieve server info");
+        mlog_err("ERROR: failed to retrieve server info");
         exit(1);
     }
 
-    printf("LOG: retrieved addrinfo\n");
+    mlog(L_NORMAL, "LOG: retrieved addrinfo\n");
 
     // TODO: walk the list of values of the linked list - connection
     // assumes the first one is the correct one to use
@@ -48,11 +49,11 @@ int socket_create(int family, int socktype, int protocol) {
     int sock_fd = socket(family, socktype, protocol);
     
     if (sock_fd < 0) {
-        perror("ERROR: Failed to create socket");
+        mlog_err("ERROR: Failed to create socket");
         exit(1);
     }
 
-    printf("LOG: created socket\n");
+    mlog(L_NORMAL, "LOG: created socket\n");
 
     return sock_fd;
 }
@@ -67,11 +68,11 @@ void socket_bind(int sock_fd, struct sockaddr* addr, socklen_t addrlen) {
     int err = bind(sock_fd, addr, addrlen);
 
     if (err < 0) {
-        perror("ERROR: Failed to bind socket");
+        mlog_err("ERROR: Failed to bind socket");
         exit(1);
     }
 
-    printf("LOG: binded socket\n");
+    mlog(L_NORMAL, "LOG: binded socket\n");
 }
 
 void socket_bind_from_info(int sock_fd, struct addrinfo* servinfo) {
@@ -84,11 +85,11 @@ void socket_listen(int sock_fd, int backlog) {
     int err = listen(sock_fd, backlog);
 
     if (err < 0) {
-        perror("ERROR: Failed to listen");
+        mlog_err("ERROR: Failed to listen");
         exit(1);
     }
 
-    printf("LOG: socket listening\n");
+    mlog(L_NORMAL, "LOG: socket listening\n");
 }
 
 
@@ -100,11 +101,11 @@ int socket_accept(int sock_fd) {
     int client_fd = accept(sock_fd, (struct sockaddr *)&client, &client_size);
 
     if (client_fd < 0) {
-        perror("ERROR: Failed to accept client");
+        mlog_err("ERROR: Failed to accept client");
         exit(1);
     }
 
-    printf("LOG: client accepted\n");
+    mlog(L_NORMAL, "LOG: client accepted\n");
 
     return client_fd;
 }
@@ -125,6 +126,7 @@ char* server_recv(int client_fd) {
     buf[read_bytes] = '\0';
     return buf;
 }
+
 
 int server_send(int client_fd, char* msg, int len) {
     return send(client_fd, msg, len, 0);
