@@ -21,16 +21,16 @@ int load_line() {
 
 
 int process_command(char *cmd) {
-    for(int i=0; i < NOC; i++) {
-      if(!strcmp(command_part(cmd),
-		   cmd_list[i])) {
-	    func_list[i](cmd, 0, 0);
-	    return(0);
-	}
+  for(int i=0; i < NOC; i++) {
+    if(!strcmp(command_part(cmd),
+	       cmd_list[i])) {
+      func_list[i](cmd, 0, 0);
+      return(0);
     }
+  }
 
-    fprintf(stderr, "ERROR: command not found!");
-    return(1);
+  fprintf(stderr, "ERROR: command not found!");
+  return(1);
 }
 
 char r_admin(char *input, struct User *user, void *additional_args) {return(0);}
@@ -46,15 +46,15 @@ char r_info(char *input, struct User *user, void *additional_args) {return(0);}
 char r_invite(char *input, struct User *user, void *additional_args) {return(0);}
 char r_ison(char *input, struct User *user, void *additional_args) {return(0);}
 char r_join(char *channel_name, struct User *user, void *channel_array) {
-    for(int i = 0; i < MAX_CHANNELS; i++) {
-	if(strcmp(channel_name, ((struct ChannelArray*)channel_array)->array[i]->name)) {
-	    add_user_to_channel(((struct ChannelArray*)channel_array)->array[i], user);
-	    return(0);
-	}
+  for(int i = 0; i < MAX_CHANNELS; i++) {
+    if(strcmp(channel_name, ((struct ChannelArray*)channel_array)->array[i]->name)) {
+      add_user_to_channel(((struct ChannelArray*)channel_array)->array[i], user);
+      return(0);
     }
+  }
 
-    fprintf(stderr, "ERROR: CHANNEL COULD NOT BE FOUND!\n");
-    return(-1);
+  fprintf(stderr, "ERROR: CHANNEL COULD NOT BE FOUND!\n");
+  return(-1);
 }
 
 char r_kick(char *input, struct User *user, void *additional_args) {return(0);}
