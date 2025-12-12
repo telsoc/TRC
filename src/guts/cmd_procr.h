@@ -5,6 +5,7 @@
 
 
 int process_command(char *cmd);
+char *command_part(char *cmd);
 
 char r_admin(char *input, struct User *user, void *additional_args);
 char r_away(char *input, struct User *user, void *additional_args);

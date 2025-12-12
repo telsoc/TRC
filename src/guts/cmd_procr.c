@@ -21,16 +21,35 @@ int load_line() {
 
 
 int process_command(char *cmd) {
+  char* cmd_part = command_part(cmd);
+  
   for(int i=0; i < NOC; i++) {
-    if(!strcmp(command_part(cmd),
-	       cmd_list[i])) {
+    if(!strcmp(cmd_part, cmd_list[i])) {
       func_list[i](cmd, 0, 0);
+      free(cmd_part);
       return(0);
     }
   }
 
   fprintf(stderr, "ERROR: command not found!");
+  free(cmd_part);
   return(1);
+}
+
+
+/* DO NOT CALL THIS UNLESS YOU HAVE SPOKEN TO
+ * ME FIRST OR YOU WILL GET A MEMORY LEAK!
+ */
+char *command_part(char *cmd) {
+  char *command = malloc(16);
+  int i = 0;
+  while(cmd[i] != '\0' &&
+	cmd[i] != ' ' &&
+	i < 16)
+    command[i++] = cmd[i];
+
+  command[i] = '\0';
+  return(command);
 }
 
 char r_admin(char *input, struct User *user, void *additional_args) {return(0);}
