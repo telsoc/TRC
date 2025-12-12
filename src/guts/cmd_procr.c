@@ -3,36 +3,46 @@
 #include <string.h>
 
 #include "cmd_procr.h"
-#include "topology.h"
-#include "init_guts.h"
+
+/* The below two lists may be merged into one
+ * of tuples at some point, though unless it's
+ * packed, that might add some unnecessary memory
+ * overhead.
+ */
+char *cmd_list[NOC] = {"admin", "away", "cnotice", "cprivmsg", "connect", "die", "encap", "error", "help", "info", "invite", "ison", "join", "kick", "kill", "knock", "links", "list", "lusers", "mode", "motd", "names", "nick", "notice", "oper", "part", "pass", "ping", "pong", "privmsg", "quit", "quote", "rehash", "rules", "server", "service", "servlist", "squery", "squit", "setname", "silence", "stats", "summon", "time", "topic", "trace", "user", "userhost", "userip", "users", "version", "wallops", "watch", "who", "whois", "whowas"};
+
+char (*func_list[NOC])(char*, struct User*, void *) = {r_admin, r_away, r_cnotice, r_cprivmsg, r_connect, r_die, r_encap, r_error, r_help, r_info, r_invite, r_ison, r_join, r_kick, r_kill, r_knock, r_links, r_list, r_lusers, r_mode, r_motd, r_names, r_nick, r_notice, r_oper, r_part, r_pass, r_ping, r_pong, r_privmsg, r_quit, r_quote, r_rehash, r_rules, r_server, r_service, r_servlist, r_squery, r_squit, r_setname, r_silence, r_stats, r_summon, r_time, r_topic, r_trace, r_user, r_userhost, r_userip, r_users, r_version, r_wallops, r_watch, r_who, r_whois, r_whowas};
 
 
-int load_line() {
+int load_line(struct User *user) {
   char cmd[MESSAGE_LENGTH];
   fgets(cmd, MESSAGE_LENGTH, stdin);
-
-  if(cmd[0] == '/')
-    process_command(cmd + 1);
   
-  printf("%s\t", cmd);
+  if(cmd[0] == '/')
+    process_command(cmd + 1, user);
 
   return(0);
 }
 
 
-int process_command(char *cmd) {
-  char* cmd_part = command_part(cmd);
+int process_command(char *cmd, struct User *user) {
+  char *cmd_part = command_part(cmd);
+  char *args_part = arguments_part(cmd);
   
   for(int i=0; i < NOC; i++) {
     if(!strcmp(cmd_part, cmd_list[i])) {
-      func_list[i](cmd, 0, 0);
+      func_list[i](cmd, user, args_part);
+      
       free(cmd_part);
+      free(args_part);
+      
       return(0);
     }
   }
 
   fprintf(stderr, "ERROR: command not found!");
   free(cmd_part);
+  free(args_part);
   return(1);
 }
 
@@ -51,6 +61,22 @@ char *command_part(char *cmd) {
   command[i] = '\0';
   return(command);
 }
+
+/* DO NOT CALL THIS UNLESS YOU HAVE SPOKEN TO
+ * ME FIRST OR YOU WILL GET A MEMORY LEAK!
+ */
+char *arguments_part(char *cmd) {
+  char *args = malloc(MESSAGE_LENGTH - 16);
+  int i = 0;
+  int j = 0;
+  
+  while(cmd[i] != '\0' && cmd[i] != ' ') i++;
+  while(cmd[i] != '\0') args[j++] = cmd[i++];
+
+  args[j] = '\0';
+  return(args);
+}
+
 
 char r_admin(char *input, struct User *user, void *additional_args) {return(0);}
 char r_away(char *input, struct User *user, void *additional_args) {return(0);}

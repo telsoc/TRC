@@ -1,3 +1,4 @@
+#define topology
 #define NICK_LENGTH 16
 #define NAME_LENGTH 16
 #define DESC_LENGTH 64

@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "init_guts.h"
-#include "topology.h"
-#include "cmd_line.h"
 
 
 /* noc is Number Of Channels */
