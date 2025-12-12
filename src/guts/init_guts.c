@@ -14,8 +14,6 @@ struct Guts init_guts(char **channels, int noc) {
      */
     guts.channel_array = NULL;
     guts.channel_array = init_channel_array(guts.channel_array, channels, noc);
-
-    load_line();
   
     return(guts);
 }

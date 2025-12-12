@@ -7,16 +7,30 @@
 #include "init_guts.h"
 
 
-char *process_command(char *cmd) {
+int load_line() {
+  char cmd[MESSAGE_LENGTH];
+  fgets(cmd, MESSAGE_LENGTH, stdin);
+
+  if(cmd[0] == '/')
+    process_command(cmd + 1);
+  
+  printf("%s\t", cmd);
+
+  return(0);
+}
+
+
+int process_command(char *cmd) {
     for(int i=0; i < NOC; i++) {
-	if(strcmp(cmd, cmd_list[i])) {
+      if(!strcmp(command_part(cmd),
+		   cmd_list[i])) {
 	    func_list[i](cmd, 0, 0);
-	    return("");
+	    return(0);
 	}
     }
 
     fprintf(stderr, "ERROR: command not found!");
-    return("ERROR: command not found!");
+    return(1);
 }
 
 char r_admin(char *input, struct User *user, void *additional_args) {return(0);}
